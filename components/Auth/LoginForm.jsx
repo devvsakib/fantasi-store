@@ -31,8 +31,8 @@ const LoginForm = () => {
       <div className="pt-5 lg:text-left">
         <h1 className="text-2xl font-bold mb-5">Login</h1>
       </div>
-      <div className="flex-shrink-0 w-full max-w-sm">
-        <form onSubmit={handleLogin} className="flex flex-col gap-2">
+      <div className="w-full  md:w-[400px]">
+        <form onSubmit={handleLogin} className="flex  flex-col gap-2">
           <div className="relative">
             <input
               type="text"
@@ -42,12 +42,6 @@ const LoginForm = () => {
               onChange={handlePhone}
               required
               placeholder="Phone Number" className="outline-none border-b p-2 w-full" />
-            <button type='button' className='absolute text-xs font-bold  right-0  bottom-2 bg-gray-500 rounded-full text-white w-4 h-4 flex items-center justify-center group'>
-              ?
-              <span
-                className='hidden group-hover:block absolute bg-gray-500 text-white px-2 py-1 rounded-md text-xs bottom-0 right-0 transform translate-x-1/5 -translate-y-5  w-[200px]'
-              >Only Bangladeshi Number</span>
-            </button>
             {error && <p className="text-muted">{error}</p>}
           </div>
           <div className="">
