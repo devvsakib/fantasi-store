@@ -1,8 +1,11 @@
+import Layout from "@/components"
 import LoginForm from "@/components/Auth/LoginForm"
 
 const Login = () => {
     return (
-        <LoginForm />
+        <Layout>
+            <LoginForm />
+        </Layout>
     )
 }
 

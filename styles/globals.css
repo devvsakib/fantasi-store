@@ -14,5 +14,12 @@ main{
 }
 
 .btn-primary{
-    @apply bg-[#08A5EB] hover:bg-[#0b7baf] transition-all duration-150 ease-linear mt-5 text-white px-5 py-2 rounded-sm
+    @apply hover:bg-teal-400 bg-[#0b7baf] transition-all duration-150 ease-linear mt-5 text-white px-5 py-2 rounded-sm
+}
+
+.footerTitle{
+    @apply uppercase font-bold text-2xl mb-5 font-oswald text-white
+}
+.footerIcon{
+    @apply p-3 rounded-full bg-teal-400 hover:bg-primary transition-all duration-200 cursor-pointer ease-linear
 }
