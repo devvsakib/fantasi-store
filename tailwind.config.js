@@ -10,6 +10,12 @@ module.exports = {
       oswald: "Oswald, sans-serif",
       urbanist: "Urbanist, sans-serif",
     },
+    extend: {
+      colors: {
+        primary: "#08A5EB",
+        secondary: "#f9a826",
+      },
+    },
   },
   plugins: [],
 }

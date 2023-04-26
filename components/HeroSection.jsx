@@ -6,7 +6,7 @@ const HeroSection = () => {
             <Layout>
                 <div className="text-center grid md:grid-cols-2 justify-between items-center">
                     <div className="text-left md:pr-20">
-                        <h1 className="mb-5 bg-clip-text text-transparent bg-gradient-to-tr to-teal-400 from-indigo-600 text-4xl md:text-7xl font-bold">Get your Fantasi E.Device!</h1>
+                        <h1 className="mb-5 bg-clip-text text-transparent bg-gradient-to-tr to-teal-400 from-indigo-600 text-4xl md:text-7xl font-bold font-oswald">Get your Fantasi E.Device!</h1>
                         <p className="mb-5">New launched Fantasi E.Device with <span className="text-[#08A5EB]">4GB RAM</span> and <span className="text-[#08A5EB]">64GB ROM</span>. Get your Fantasi E.Device now!</p>
                         <Link href={'/register'}>
                             <button className="btn-primary">Order Now</button>
