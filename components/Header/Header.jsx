@@ -8,7 +8,7 @@ const Header = () => {
 
     const handleOpen = () => setOpen(!open)
     return (
-        <div className="shadow-xl bg-gray-800 text-white py-2">
+        <div className="shadow-xl fixed w-full bg-gray-800 text-white py-2">
             <Layout>
                 <div className="navbar flex justify-between bg-base-100">
                     <div className="navbar-start">
