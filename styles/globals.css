@@ -12,3 +12,7 @@
 main{
     flex: 1;
 }
+
+.btn-primary{
+    @apply bg-[#08A5EB] hover:bg-[#0b7baf] transition-all duration-150 ease-linear mt-5 text-white px-5 py-2 rounded-sm
+}
