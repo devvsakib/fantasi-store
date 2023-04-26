@@ -11,8 +11,8 @@ export default function Home() {
 
   const fetchData = async () => {
     try {
-      const productResponse = await axios.get('http://localhost:5000');
-      const categoryResponse = await axios.get('http://localhost:5000/categories');
+      const productResponse = await axios.get('https://fantasiserver.onrender.com');
+      const categoryResponse = await axios.get('https://fantasiserver.onrender.com/categories');
 
       setProducts(productResponse.data);
       setCategories(categoryResponse.data);
