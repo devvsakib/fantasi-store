@@ -5,6 +5,7 @@ import ProductCard from "@/components/ProductCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
+import api from "@/lib/API";
 
 export default function Home() {
   const [products, setProducts] = useState([])
@@ -13,8 +14,8 @@ export default function Home() {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const productResponse = await axios.get('https://fantasiserver.onrender.com');
-      const categoryResponse = await axios.get('https://fantasiserver.onrender.com/categories');
+      const productResponse = await api.get('/');
+      const categoryResponse = await api.get('categories');
 
       setProducts(productResponse.data);
       setCategories(categoryResponse.data);

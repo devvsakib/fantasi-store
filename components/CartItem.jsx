@@ -1,19 +1,18 @@
 import { FaTrash } from 'react-icons/fa'
-const CartItem = ({ product, handleRemove }) => {
-    console.log(process.env.MY_VAR);
+const CartItem = () => {
     return (
-        <div className="review">
+        <div className="flex items-center justify-between bg-gray-100 py-4 rounded-lg mr-32 px-10">
             <div>
-                <img src="/iphone.png" alt="prod img" />
+                <img className='w-24' src="/iphone.png" alt="prod img" />
             </div>
             <div className='review-details'>
                 <h2>iPhone 14 Pro max</h2>
                 <p>Price: $1999</p>
             </div>
             {/* <p className='quantity'>Quantity: {product.quantity}</p> */}
-            {/* <button onClick={() => handleRemove(product.id)}> */}
-            <FaTrash />
-            {/* </button> */}
+            <button onClick={() => handleRemove(product.id)}>
+                <FaTrash />
+            </button>
         </div>
     )
 }

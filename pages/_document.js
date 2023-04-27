@@ -7,6 +7,7 @@ export default function Document() {
       <Head>
         <link rel="icon" href="/favicon.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <title>FantasiStore - Product in your door</title>
         <link
           rel="preconnect"
           href="https://fonts.gstatic.com"

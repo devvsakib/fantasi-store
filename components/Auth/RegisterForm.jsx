@@ -1,31 +1,89 @@
+import api from '@/lib/API'
+import axios from 'axios'
 import Link from 'next/link'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
+import { useRouter } from "next/router";
 
 const RegisterForm = () => {
     const [phone, setPhone] = useState('')
     const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(false)
     const [error, setError] = useState('')
     const isValidPhoneNumber = /^(?:\+88|88)?(01[3-9]\d{8})$/; // Bangladeshi phone number regx
-
+    const [success, setSuccess] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+    const [user, setUser] = useState({
+        name: "",
+        username: "",
+        phoneNumber: "",
+        password: "",
+        type: "customer"
+    })
+    const router = useRouter()
     const handlePhone = (e) => {
-        const { value } = e.target
+        const { value } = e.target;
         if (isValidPhoneNumber.test(value)) {
             setError('')
             setPhone(value)
+            setUser ({
+                ...user,
+                phoneNumber: value
+            })
             setIsPhoneNumberValid(true)
         } else {
             setError('Invalid phone number')
             setPhone(value)
+            setUser ({
+                ...user,
+                phoneNumber: value
+            })
             setIsPhoneNumberValid(false)
         }
+    };
 
+    const getUserData = (e) => {
+        const { name, value } = e.target;
+        setUser({
+            ...user,
+            [name]: value
+        })
     }
-
-    const handleRegister = (e) => {
+    const handleRegister = e => {
         e.preventDefault()
-        toast.success('Registration successful')
+
+        setIsLoading(true)
+        if (user.password === user.confirmpassword) {
+            api.post("user/register", user)
+                .then(res => {
+                    console.log(res);
+                    if (res.status === 201) {
+                        router.push('/login')
+                        setSuccess(true)
+                        toast.success(res.data.message, {
+                            duration: 3000,
+                        })
+                    } else {
+                        setSuccess(true)
+                        toast.error(res.data.message, {
+                            duration: 3000,
+                        })
+                    }
+                    setIsLoading(false)
+                })
+                .catch(error => {
+                    toast.error(error.response.data.message)
+                  })
+        }
+        else {
+            toast.error("Password doesn't match", {
+                duration: 3000,
+            })
+            setIsLoading(false)
+        }
     }
+
+
+
     return (
         <div className="flex-col shadow-2xl rounded-md p-5 md:p-5 my-20">
             <div className="pt-5 lg:text-left">
@@ -33,11 +91,15 @@ const RegisterForm = () => {
             </div>
             <div className="flex-shrink-0 w-full max-w-sm">
                 <form onSubmit={handleRegister} className="flex flex-col gap-2">
+                    <div>
+                        <input onChange={getUserData} type="text" name='name' placeholder="Full Name" className="outline-none border-b p-2 w-full" required />
+                        <input onChange={getUserData} type="text" name='username' placeholder="username" className="outline-none border-b p-2 w-full" required />
+                    </div>
                     <div className="relative">
                         <input
                             type="text"
                             id="phone"
-                            name="phone"
+                            name="phoneNumber"
                             value={phone}
                             onChange={handlePhone}
                             required
@@ -51,8 +113,8 @@ const RegisterForm = () => {
                         {error && <p className="text-muted">{error}</p>}
                     </div>
                     <div className="">
-                        <input type="text" placeholder="Password" className="outline-none border-b p-2 w-full" required />
-                        <input type="text" placeholder="Confirm Password" className="outline-none border-b p-2 w-full" required />
+                        <input onChange={getUserData} type="password" name='password' placeholder="Password" className="outline-none border-b p-2 w-full" required />
+                        <input onChange={getUserData} type="password" name='confirmpassword' placeholder="Confirm Password" className="outline-none border-b p-2 w-full" required />
                     </div>
                     <div className="my-6">
                         <button
