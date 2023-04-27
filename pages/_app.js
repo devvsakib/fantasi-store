@@ -1,18 +1,18 @@
 import Footer from '@/components/Footer'
 import Header from '@/components/Header/Header.jsx'
-import { CartProvider } from '@/context/CartProvider'
+import ContextProvider from '@/context'
 import '@/styles/globals.css'
 import { Toaster } from 'react-hot-toast'
 
 export default function App({ Component, pageProps }) {
   return (
     <>
-      <Header>
-      </Header>
-      <Toaster />
-      <CartProvider>
+      <ContextProvider>
+        <Header>
+        </Header>
+        <Toaster />
         <Component {...pageProps} />
-      </CartProvider>
+      </ContextProvider>
       <Footer />
     </>
   )

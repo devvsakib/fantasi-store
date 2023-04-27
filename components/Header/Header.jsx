@@ -1,14 +1,16 @@
 import Link from "next/link"
 import Layout from ".."
 import ActiveLink from "./ActiveLink.jsx"
-import { useState } from "react"
+import { useContext, useState } from "react"
+import { AuthContext } from "@/context/AuthProvider"
 
 const Header = () => {
     const [open, setOpen] = useState(false)
-
+    const { userDetails, logOut } = useContext(AuthContext)
+    console.log(userDetails);
     const handleOpen = () => setOpen(!open)
     return (
-        <div className="shadow-xl fixed w-full bg-gray-800 text-white py-2">
+        <div className="z-10 shadow-xl fixed w-full bg-gray-800 text-white py-2">
             <Layout>
                 <div className="navbar flex justify-between bg-base-100">
                     <div className="navbar-start">
@@ -38,13 +40,26 @@ const Header = () => {
                         <div className="flex gap-2 items-center">
                             <img className="w-24" src="/logo.png" alt="" />
                         </div>
+                        <div>
+                            {userDetails && <p className="text-sm text-gray-400">Welcome, {userDetails.username}</p>}
+                        </div>
                     </div>
                     {/* Desktop Navbar */}
                     <div className="navbar-center items-center hidden md:flex">
                         <ul className="menu menu-horizontal px-1 flex gap-10">
                             <li><ActiveLink href={"/"}>Home</ActiveLink></li>
                             <li><ActiveLink href={"/cart"}>Cart</ActiveLink></li>
-                            <li><ActiveLink href={"/login"}>Login</ActiveLink></li>
+                            {
+                                userDetails ?
+                                    <>
+                                        {userDetails.usertype === "admin" ? <li><ActiveLink href={"/admin"}>Admin</ActiveLink></li>
+                                            :
+                                            <li><ActiveLink href={"/customer"}>My Profile</ActiveLink></li>}
+                                        <li><button onClick={logOut}>Logout</button></li>
+                                </> :
+                                    <li><ActiveLink href={"/login"}>Login</ActiveLink></li>
+                            }
+
                             {/* <li><Link href={"/admin"}>Admin</Link></li> */}
                         </ul>
                     </div>
