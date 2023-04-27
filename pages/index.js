@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
 import api from "@/lib/API";
+import Link from "next/link";
 
 export default function Home() {
   const [products, setProducts] = useState([])
@@ -64,8 +65,13 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 mt-5">
               {
-                products.map((product, idx) => <ProductCard key={idx} product={product} />)
+                products.slice(0, 8).map((product, idx) => <ProductCard key={idx} product={product} />)
               }
+            </div>
+            <div className="mt-5 text-center">
+              <Link className="btn-primary" href="/product">
+                All Products
+              </Link>
             </div>
           </div>
         </div>
