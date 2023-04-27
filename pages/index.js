@@ -29,7 +29,6 @@ export default function Home() {
     fetchData();
   }, []);
 
-  console.log(products)
   return (
     <div>
       <HeroSection />
@@ -40,6 +39,7 @@ export default function Home() {
             {
               loading && <Image
                 src={"/spinner.svg"}
+                alt="Spinner"
                 width={100}
                 height={100}
                 className="mx-auto"
@@ -56,6 +56,7 @@ export default function Home() {
               {
                 loading && <Image
                   src={"/spinner.svg"}
+                  alt="Spinner"
                   width={100}
                   height={100}
                   className="mx-auto"

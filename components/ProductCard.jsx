@@ -1,17 +1,18 @@
-import React from 'react'
+import Link from 'next/link';
 
-const ProductCard = ({product}) => {
+const ProductCard = ({ product }) => {
   return (
     <div className="bg-white rounded-lg shadow-md p-5">
-    <div className="flex flex-col justify-center ">
-      <img src={product.image} alt={product.name} className="w-40 h-40 object-contain" />
-      <h2>{product.model}</h2>
+      <div className="flex flex-col justify-center ">
+        <img src={product.image} alt={product.name} className="w-40 h-40 object-contain" />
+        <Link href={`/product/${product?.slug}`}>
+        <h2>{product.model}</h2>
+        </Link>
+      </div>
+      <div className="flex justify-between mt-5">
+        <h2 className="font-semibold text-xl">${product.price}</h2>
+      </div>
     </div>
-    <div className="flex justify-between mt-5">
-      <h2 className="font-semibold text-xl">${product.price}</h2>
-      <button className="bg-blue-500 text-white px-5 py-2 rounded-lg">Add to cart</button>
-    </div>
-  </div>
   )
 }
 

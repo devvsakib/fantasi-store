@@ -1,18 +1,25 @@
 import Layout from '@/components'
 import CartItem from '@/components/CartItem'
+import { CartContext } from '@/context/CartProvider'
+import api from '@/lib/API'
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 const cart = () => {
   const [loading, setLoading] = useState(false)
-  const subTotal = 342.0
+  const { cartItems } = useContext(CartContext)
   const handlePayment = () => { }
+
   return (
     <Layout>
       <div className='w-[100%] grid grid-cols-3 mt-32 mb-20 gap-10'>
         {/* Cart Items Start */}
-        <div className='col-span-2'>
-          <CartItem />
+        <div className='col-span-2 flex flex-col gap-10'>
+          {
+            cartItems?.map((item, index) => (
+              <CartItem key={index} item={item} />
+            ))
+          }
         </div>
         {/* Cart Items END */}
         {/* Summary Start */}
@@ -25,7 +32,7 @@ const cart = () => {
                 Subtotal
               </div>
               <div className="text-md md:text-lg font-medium text-black">
-                ${subTotal}
+                ${cartItems?.reduce((acc, item) => acc + item.price, 0)}
               </div>
             </div>
             <div className="text-sm md:text-md py-5 border-t mt-5">
@@ -39,7 +46,7 @@ const cart = () => {
 
           {/* BUTTON START */}
           <button
-            className="w-full py-4 rounded-full bg-black text-white text-lg font-medium transition-transform active:scale-95 mb-3 hover:opacity-75 flex items-center gap-2 justify-center"
+            className={`w-full py-4 rounded-full text-white text-lg font-medium transition-transform active:scale-95 mb-3 flex bg-black items-center gap-2 justify-center ${cartItems.length ? 'hover:opacity-75' : ' opacity-75 '}`}
             onClick={handlePayment}
           >
             Checkout

@@ -7,16 +7,15 @@ import { AuthContext } from "@/context/AuthProvider"
 const Header = () => {
     const [open, setOpen] = useState(false)
     const { userDetails, logOut } = useContext(AuthContext)
-    console.log(userDetails);
     const handleOpen = () => setOpen(!open)
     return (
-        <div className="z-10 shadow-xl fixed w-full bg-gray-800 text-white py-2">
+        <div className="z-10 shadow-xl fixed w-full bg-gray-800/50 backdrop-blur-sm text-white py-2">
             <Layout>
                 <div className="navbar flex justify-between bg-base-100">
                     <div className="navbar-start">
                         {/* Mobile */}
                         {
-                            open && <div className="absolute top-16 b bg-base-100 p-5 rounded-lg shadow-xl shadow-[#08A5EB]/20 w-[90%] block md:hidden bg-gray-800">
+                            open && <div className="absolute top-[70px] b bg-base-100 p-5 rounded-lg shadow-xl shadow-[#08A5EB]/20 w-[90%] block md:hidden bg-gray-800">
                                 <ul className="menu grid rounded-box w-[100%]">
                                     <ActiveLink href={"/"}>
                                         <li className="p-3 rounded-md cursor-pointer px-5 hover:bg-slate-700">
@@ -28,20 +27,21 @@ const Header = () => {
                                             Cart
                                         </li>
                                     </ActiveLink>
-                                    <ActiveLink href={"/login"}>
-                                        <li className="p-3 rounded-md cursor-pointer px-5 hover:bg-slate-700">
-                                            Login
-                                        </li>
-                                    </ActiveLink>
-                                    {/* <li><Link href={"/admin"}>Admin</Link></li> */}
+                                    {
+                                        userDetails ?
+                                            <>
+                                                {userDetails?.usertype === "admin" ? <li className="p-3 rounded-md cursor-pointer px-5 hover:bg-slate-700"><ActiveLink href={"/admin"}>Admin</ActiveLink></li>
+                                                    :
+                                                    <li className="p-3 rounded-md cursor-pointer px-5 hover:bg-slate-700"><ActiveLink href={"/customer"}>My Profile</ActiveLink></li>}
+                                                <li className="p-3 rounded-md cursor-pointer px-5 hover:bg-slate-700"><button onClick={logOut}>Logout</button></li>
+                                            </> :
+                                            <li className="p-3 rounded-md cursor-pointer px-5 hover:bg-slate-700"><ActiveLink href={"/login"}>Login</ActiveLink></li>
+                                    }
                                 </ul>
                             </div>
                         }
                         <div className="flex gap-2 items-center">
                             <img className="w-24" src="/logo.png" alt="" />
-                        </div>
-                        <div>
-                            {userDetails && <p className="text-sm text-gray-400">Welcome, {userDetails.username}</p>}
                         </div>
                     </div>
                     {/* Desktop Navbar */}
@@ -56,11 +56,9 @@ const Header = () => {
                                             :
                                             <li><ActiveLink href={"/customer"}>My Profile</ActiveLink></li>}
                                         <li><button onClick={logOut}>Logout</button></li>
-                                </> :
+                                    </> :
                                     <li><ActiveLink href={"/login"}>Login</ActiveLink></li>
                             }
-
-                            {/* <li><Link href={"/admin"}>Admin</Link></li> */}
                         </ul>
                     </div>
                     <button onClick={handleOpen} className="btn btn-ghost md:hidden ml-5">

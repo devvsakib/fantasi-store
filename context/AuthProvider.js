@@ -12,6 +12,7 @@ const AuthProvider = ({ children }) => {
     const logOut = () => {
         setUserDetails(null)
         localStorage.removeItem('userDetails')
+        localStorage.removeItem('fantasi-cart')
         toast.success('Sign out successful')
         router.push('/')
     }
@@ -22,7 +23,6 @@ const AuthProvider = ({ children }) => {
             setUserDetails(JSON.parse(userDetails))
         }
     }, [])
-    console.log(userDetails);
     const authInfo = {
         userDetails,
         setUserDetails,

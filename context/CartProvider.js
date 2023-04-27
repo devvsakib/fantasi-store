@@ -1,4 +1,5 @@
 import { createContext, useState } from 'react'
+import { toast } from 'react-hot-toast'
 
 export const CartContext = createContext()
 
@@ -6,18 +7,19 @@ export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([])
 
   const addToCart = (product) => {
-    const itemIndex = cartItems.findIndex((item) => item.id === product.id)
-    if (itemIndex === -1) {
-      setCartItems([...cartItems, { ...product, quantity: 1 }])
-    } else {
-      const newCartItems = [...cartItems]
-      newCartItems[itemIndex].quantity++
+    const itemIndex = cartItems.find((item) => item.slug === product.slug)
+    if (!itemIndex) {
+      const newCartItems = [...cartItems, product]
       setCartItems(newCartItems)
+      toast.success("Added To Cart");
+    }
+    else{
+      toast.error("Already Added")
     }
   }
 
-  const removeFromCart = (productId) => {
-    setCartItems(cartItems.filter((item) => item.id !== productId))
+  const removeFromCart = (productSlug) => {
+    setCartItems(cartItems.filter((item) => item.slug !== productSlug))
   }
 
   const clearCart = () => {
