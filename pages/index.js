@@ -2,33 +2,17 @@ import Layout from "@/components";
 import Category from "@/components/Category";
 import HeroSection from "@/components/HeroSection";
 import ProductCard from "@/components/ProductCard";
-import { useEffect, useState } from "react";
-import axios from "axios";
 import Image from "next/image";
-import api from "@/lib/API";
 import Link from "next/link";
+import { useCategories, useProducts } from "@/lib/API";
 
 export default function Home() {
-  const [products, setProducts] = useState([])
-  const [categories, setCategories] = useState([])
-  const [loading, setLoading] = useState(true)
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-      const productResponse = await api.get('/');
-      const categoryResponse = await api.get('categories');
+  const { products, isLoading, isError } = useProducts();
+  const { categories } = useCategories();
 
-      setProducts(productResponse.data);
-      setCategories(categoryResponse.data);
-      setLoading(false);
-    } catch (error) {
-      console.error(error);
-    }
+  if (isError) {
+    return <div>Error: {isError.message}</div>;
   }
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   return (
     <div>
@@ -38,7 +22,7 @@ export default function Home() {
           <h3 className="font-semibold text-xl">Explore Brands</h3>
           <div>
             {
-              loading && <Image
+              isLoading && <Image
                 src={"/spinner.svg"}
                 alt="Spinner"
                 width={100}
@@ -55,7 +39,7 @@ export default function Home() {
             <h1 className="mb-5 bg-clip-text text-transparent bg-gradient-to-tr to-teal-400 from-indigo-600 text-xl md:text-3xl font-bold text-center">Awesome Products</h1>
             <div>
               {
-                loading && <Image
+                isLoading && <Image
                   src={"/spinner.svg"}
                   alt="Spinner"
                   width={100}
@@ -65,11 +49,11 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 mt-5">
               {
-                products.slice(0, 8).map((product, idx) => <ProductCard key={idx} product={product} />)
+                products?.slice(0, 8).map((product, idx) => <ProductCard key={idx} product={product} />)
               }
             </div>
-            <div className="mt-5 text-center">
-              <Link className="btn-primary" href="/product">
+            <div className="mt-16 text-center">
+              <Link className="btn-primary" href="/products">
                 All Products
               </Link>
             </div>

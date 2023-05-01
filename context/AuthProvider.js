@@ -7,8 +7,7 @@ export const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
     const [userDetails, setUserDetails] = useState(null)
     const router = useRouter()
-    const logIn = (number, password) => {
-    }
+    
     const logOut = () => {
         setUserDetails(null)
         localStorage.removeItem('userDetails')

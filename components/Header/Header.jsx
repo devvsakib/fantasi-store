@@ -1,15 +1,24 @@
 import Link from "next/link"
 import Layout from ".."
 import ActiveLink from "./ActiveLink.jsx"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "@/context/AuthProvider"
+import useWindowSize from "@/hooks/useWindowSize"
 
 const Header = () => {
     const [open, setOpen] = useState(false)
     const { userDetails, logOut } = useContext(AuthContext)
     const handleOpen = () => setOpen(!open)
+    const windowSize = useWindowSize()
+
+    useEffect(() => {
+        if (windowSize.width > 768) {
+            setOpen(false)
+        }
+    }, [windowSize])
+    
     return (
-        <div className="z-10 shadow-xl fixed w-full bg-gray-800/50 backdrop-blur-sm text-white py-2">
+        <div className="z-10 shadow-xl w-full bg-gray-800 backdrop-blur-sm text-white py-2">
             <Layout>
                 <div className="navbar flex justify-between bg-base-100">
                     <div className="navbar-start">
@@ -18,24 +27,24 @@ const Header = () => {
                             open && <div className="absolute top-[70px] b bg-base-100 p-5 rounded-lg shadow-xl shadow-[#08A5EB]/20 w-[90%] block md:hidden bg-gray-800">
                                 <ul className="menu grid rounded-box w-[100%]">
                                     <ActiveLink href={"/"}>
-                                        <li className="p-3 rounded-md cursor-pointer px-5 hover:bg-slate-700">
+                                        <li onClick={handleOpen} className="p-3 rounded-md cursor-pointer px-5 hover:bg-slate-700">
                                             Home
                                         </li>
                                     </ActiveLink>
                                     <ActiveLink href={"/cart"}>
-                                        <li className="p-3 rounded-md cursor-pointer px-5 hover:bg-slate-700">
+                                        <li onClick={handleOpen} className="p-3 rounded-md cursor-pointer px-5 hover:bg-slate-700">
                                             Cart
                                         </li>
                                     </ActiveLink>
                                     {
                                         userDetails ?
                                             <>
-                                                {userDetails?.usertype === "admin" ? <li className="p-3 rounded-md cursor-pointer px-5 hover:bg-slate-700"><ActiveLink href={"/admin"}>Admin</ActiveLink></li>
+                                                {userDetails?.usertype === "admin" ? <li onClick={handleOpen} className="p-3 rounded-md cursor-pointer px-5 hover:bg-slate-700"><ActiveLink href={"/admin"}>Admin</ActiveLink></li>
                                                     :
-                                                    <li className="p-3 rounded-md cursor-pointer px-5 hover:bg-slate-700"><ActiveLink href={"/customer"}>My Profile</ActiveLink></li>}
+                                                    <li onClick={handleOpen} className="p-3 rounded-md cursor-pointer px-5 hover:bg-slate-700"><ActiveLink href={"/customer"}>My Profile</ActiveLink></li>}
                                                 <li className="p-3 rounded-md cursor-pointer px-5 hover:bg-slate-700"><button onClick={logOut}>Logout</button></li>
                                             </> :
-                                            <li className="p-3 rounded-md cursor-pointer px-5 hover:bg-slate-700"><ActiveLink href={"/login"}>Login</ActiveLink></li>
+                                            <li onClick={handleOpen} className="p-3 rounded-md cursor-pointer px-5 hover:bg-slate-700"><ActiveLink href={"/login"}>Login</ActiveLink></li>
                                     }
                                 </ul>
                             </div>

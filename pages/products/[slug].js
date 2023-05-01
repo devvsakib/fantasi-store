@@ -1,24 +1,16 @@
 import Layout from '@/components';
 import { CartContext } from '@/context/CartProvider';
-import api from '@/lib/API';
+import { useProductById } from '@/lib/API';
 import { useRouter } from 'next/router';
-import React, { useContext, useEffect, useState } from 'react'
-import { toast } from 'react-hot-toast';
+import { useContext } from 'react'
+
 
 const ProductDetail = () => {
     const router = useRouter();
     const { cartItems, addToCart } = useContext(CartContext);
     const { slug } = router.query;
-    const [product, setProduct] = useState({})
-    useEffect(() => {
-        const fetchData = async () => {
-            await api.get(`/product/${slug}`)
-                .then(res => setProduct(res.data))
-                .catch(err => console.log(err.message))
-        }
-        fetchData()
+    const { product, isLoading, error } = useProductById(slug);
 
-    }, [slug])
     const handleAddToCart = (product) => {
         addToCart(product);
         console.log(cartItems);
@@ -31,15 +23,15 @@ const ProductDetail = () => {
                 <div className='my-5 mt-10 grid grid-cols-1 md:grid-cols-3'>
                     <div>
                         <img
-                            src={product?.image}
-                            alt={product?.model}
+                            src={product?.image ?? "Loading"}
+                            alt={product?.model ?? "Loading"}
                             className='mx-auto'
                         />
                     </div>
-                    <div className='mx-auto w-3/12 mt-5 col-span-2 flex flex-col gap-5'>
-                        <p><b>Brand:</b> ${product?.brand}</p>
-                        <p><b>Price:</b> ${product?.price}</p>
-                        <p><b>In Stock:</b> {product?.available ? "Yes" : "No"}</p>
+                    <div className='mx-auto md:w-3/12 mt-5 col-span-2 flex flex-col gap-5'>
+                        <p className='flex gap-5'><b>Brand:</b> {product?.brand ?? "Loading"}</p>
+                        <p className='flex gap-5'><b>Price:</b> ${product?.price ?? "Loading"}</p>
+                        <p className='flex gap-5'><b>In Stock:</b> {product?.available ? "Yes" : "No"}</p>
                         <button onClick={() => handleAddToCart(product)} className='btn-primary'>Add To Cart</button>
                     </div>
                 </div>

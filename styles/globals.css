@@ -23,3 +23,10 @@ main{
 .footerIcon{
     @apply p-3 rounded-full bg-teal-400 hover:bg-primary transition-all duration-200 cursor-pointer ease-linear
 }
+.borderRadius {
+    border-radius: 6px;
+  }
+  .roundedCircle {
+    border-radius: 100%;
+  }
+  
