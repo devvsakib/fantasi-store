@@ -21,3 +21,48 @@ yarn dev
 # or
 pnpm dev
 ```
+
+## Features
+
+- Admin/Customer Login
+- Customer Registration
+- Customer Profile
+- Add to Cart
+- Cart
+- Admin Dashboard
+   - Add Product
+   - Add Customer
+- Product Details
+- Product List
+
+
+## Tech Stack
+
+- Next.js
+- React.js
+- Tailwind CSS
+- Material UI
+
+## Backend
+
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JWT
+- Bcrypt
+> API https://fantasiserver.onrender.com/
+
+## OSS Design
+
+- Figma
+- Wrappixel
+
+## Deployment
+
+- Vercel
+- Render
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
